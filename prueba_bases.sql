@@ -23,3 +23,9 @@ INSERT INTO facturas(numero_factura, id_cliente, fecha_factura, subtotal, iva, p
 --insertando datos tabla facturas_productos
 INSERT INTO facturas_productos(numero_factura, id_producto, cantidad, precio_unitario, valor_total) VALUES(1, 3, 5, 75, 375), (1, 5, 3, 175, 525);
 INSERT INTO facturas_productos(numero_factura, id_producto, cantidad, precio_unitario, valor_total) VALUES (2, 2, 3, 120, 360), (2, 8, 4, 95, 380), (2, 1, 8, 50, 400), (3, 7, 3, 250, 750), (3, 6, 2, 120, 240), (3, 5, 3, 175, 525), (4, 2, 4, 120, 480), (4, 4, 4, 200, 800), (5, 1, 3, 50, 150), (5, 5, 4, 175, 700), (5, 2, 2, 120, 240), (6, 4, 6, 200, 1200), (7, 3, 9, 75, 675), (7, 6, 4, 120, 480), (8, 8, 15, 95, 1425), (8, 4, 2, 200, 400), (8, 2, 15, 120, 1800), (9, 7, 8, 250, 2000), (9, 2, 6, 120, 720), (9, 3, 9, 75, 675), (9, 5, 8, 175, 1400), (10, 3, 9, 75, 675);
+--primera consulta... ¿Que cliente realizó la compra más cara?
+SELECT nombre_cliente FROM clientes WHERE id_cliente IN(SELECT id_cliente FROM facturas WHERE precio_total=(SELECT MAX (precio_total) FROM facturas));
+--segunda consulta... ¿Que cliente pagó sobre 100 de monto?
+SELECT nombre_cliente FROM clientes WHERE id_cliente IN(SELECT id_cliente FROM facturas WHERE precio_total > 100);
+--tercera consulta.. ¿Cuantos clientes han comprado el producto 6?
+SELECT COUNT(DISTINCT id_cliente) FROM facturas WHERE numero_factura IN(SELECT numero_factura FROM facturas_productos WHERE id_producto=6);
